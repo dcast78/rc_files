@@ -1,1 +1,28 @@
-/etc/profile
+# /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
+# and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+
+PATH="/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:/usr/games"
+
+if [ "$BASH" ]; then
+  PS1='\u@\h:\w\$ '
+else
+  if [ "`id -u`" -eq 0 ]; then
+    PS1='# '
+  else
+    PS1='$ '
+  fi
+fi
+
+export PATH PS1
+export LESS_TERMCAP_mb=$'\E[01;31m'
+export LESS_TERMCAP_md=$'\E[01;31m'
+export LESS_TERMCAP_me=$'\E[0m'
+export LESS_TERMCAP_se=$'\E[0m'                           
+export LESS_TERMCAP_so=$'\E[01;44;33m'                                 
+export LESS_TERMCAP_ue=$'\E[0m'
+export LESS_TERMCAP_us=$'\E[01;32m'
+
+
+umask 022
+alias halt="echo comando disabilitato con alias"
+alias sincro_vm="rsync -avz --delete --exclude 'prove' -e ssh /var/www/htdocs/ root@10.38.104.50:/var/www/htdocs"
