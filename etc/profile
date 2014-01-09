@@ -25,4 +25,120 @@ export LESS_TERMCAP_us=$'\E[01;32m'
 
 umask 022
 alias halt="echo comando disabilitato con alias"
-alias sincro_vm="rsync -avz --delete --exclude 'prove' -e ssh /var/www/htdocs/ root@10.38.104.50:/var/www/htdocs"
+
+# if user is not root, pass all commands via sudo #
+if [ $UID -ne 0 ]; then
+test -f /usr/bin/sudo && alias reboot='sudo reboot'
+test -f /usr/bin/sudo && alias update='sudo apt-get upgrade'
+fi
+
+alias ll='ls -la'
+# alias l='ls $LS_OPTIONS -lA'
+#
+# Some more alias to avoid making mistakes:
+#alias rm='rm -i'
+#alias cp='cp -i'
+#alias mv='mv -i'
+alias killall='killall -i'
+# accodiamo all.history invece di sovrascrivere l.history con quella associata alla shell
+shopt -s histappend
+# salviamo l.history dopo ogni comando
+export PROMPT_COMMAND="history -a;history -r"
+
+alias sha1='openssl sha1'
+
+alias mkdir='mkdir -pv'
+
+alias mount='mount |column -t'
+
+alias h='history'
+alias j='jobs -l'
+
+alias vi=vim
+test -f /usr/bin/sudo && alias svi='sudo vi'
+alias vis='vim "+set si"'
+alias edit='vim'
+
+alias ports='netstat -tulanp'
+alias netstat='netstat -polenta'
+
+alias forest='ps -ef --forest'
+
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+ 
+# confirmation #
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+ 
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+test -f /usr/bin/sudo && alias apt-get="sudo apt-get"
+test -f /usr/bin/sudo && alias updatey="sudo apt-get --yes"
+
+# reboot / halt / poweroff
+test -f /usr/bin/sudo && alias reboot='sudo /sbin/reboot'
+test -f /usr/bin/sudo && alias poweroff='sudo /sbin/poweroff'
+test -f /usr/bin/sudo && alias halt='sudo /sbin/halt'
+test -f /usr/bin/sudo && alias shutdown='sudo /sbin/shutdown'
+
+
+## pass options to free ## 
+alias meminfo='free -m -l -t'
+ 
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps auxf | sort -nr -k 4 | head -10'
+ 
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
+ 
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+ 
+## older system use /proc/cpuinfo ##
+##alias cpuinfo='less /proc/cpuinfo' ##
+ 
+## get GPU ram on desktop / laptop## 
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+
+## this one saved by butt so many times ##
+alias wget='wget -c'
+
+alias cmdtopng='echo "comando | convert label:@- file_immagine.png"'
+
+alias screencast='ffmpeg -f x11grab -r 25 -s 800x600 -i :0.0 ~/screencast.mpg'
+
+test -f /usr/bin/sudo && alias ram_view='sudo dd if=/dev/mem | cat | strings' || alias ram_view=' dd if=/dev/mem | cat | strings' 
+
+alias 'ps?'='ps ax | grep '
+
+alias psnet='lsof -P -i -n'
+
+alias nodup="awk '!x[$0]++' <file>"
+
+alias vimcrypt='vim -x '
+
+alias vimscp='echo "vim scp://username@host//path/to/somefile"'
+
+alias ssh-copy-id='cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir ~/.ssh; cat >> ~/.ssh/authorized_keys"'
+
+alias mkdir="mkdir /home/foo/doc/bar && cd $_"
+
+alias dpkg_search='echo "dpkg -S /full/path/of/file"; dpkg -S'
+
+alias drive_edit='google docs edit --editor vim --title '
+
+alias 5s='timeout 5s '
+
+alias top_file='diff <(lsof -p 1234) <(sleep 10; lsof -p 1234)'
+
+alias bck='cp file.txt{,.bak}'
+
+alias rsync='rsync --partial --progress'
