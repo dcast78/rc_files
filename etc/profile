@@ -47,8 +47,6 @@ export PROMPT_COMMAND="history -a;history -r"
 
 alias sha1='openssl sha1'
 
-alias mkdir='mkdir -pv'
-
 alias mount='mount |column -t'
 
 alias h='history'
@@ -129,7 +127,7 @@ alias vimscp='echo "vim scp://username@host//path/to/somefile"'
 
 alias ssh-copy-id='cat ~/.ssh/id_rsa.pub | ssh user@machine "mkdir ~/.ssh; cat >> ~/.ssh/authorized_keys"'
 
-alias mkdir="mkdir /home/foo/doc/bar && cd $_"
+function mkd() { mkdir -pv  $1;  cd $1;}
 
 alias dpkg_search='echo "dpkg -S /full/path/of/file"; dpkg -S'
 
